@@ -81,7 +81,17 @@ def process_video(
         "webvtt",
         str(subtitles_path),
     ]
-    _run_ffmpeg(subtitles_cmd)
+    try:
+        _run_ffmpeg(subtitles_cmd)
+    except RuntimeError as exc:
+        # Many videos will not contain subtitle streams.  In that case ffmpeg
+        # reports ``Output file does not contain any stream``.  We treat this as
+        # an optional feature and simply skip subtitle generation when no
+        # subtitles are present.
+        if "Output file does not contain any stream" in str(exc):
+            subtitles_path = None
+        else:
+            raise
 
     # --- Segment video ---
     segment_template = out_dir / "segment_%03d.mp4"
@@ -111,7 +121,7 @@ def process_video(
 
     return {
         "audio": str(audio_path),
-        "subtitles": str(subtitles_path),
+        "subtitles": str(subtitles_path) if subtitles_path else None,
         "segments": [str(p) for p in segments],
     }
 

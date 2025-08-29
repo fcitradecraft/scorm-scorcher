@@ -8,8 +8,6 @@ import subprocess
 def process_video(video_path: str) -> None:
     """Basic processing of a video file.
 
-> main
-
     Args:
         video_path: Path to the input video file.
 

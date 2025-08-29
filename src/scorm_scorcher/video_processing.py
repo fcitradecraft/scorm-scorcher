@@ -37,5 +37,4 @@ def process_video(video_path: str) -> None:
     if result.returncode != 0:
         stderr = result.stderr.strip() or "Unknown ffmpeg error"
         raise RuntimeError(f"ffmpeg failed to process '{video_path}': {stderr}")
-
     print(f"Processing video: {video_path}")

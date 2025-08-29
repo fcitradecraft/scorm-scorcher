@@ -1,0 +1,9 @@
+click
+
+[full]
+openai
+pandas
+moviepy
+srt
+python-docx
+jinja2

@@ -20,10 +20,10 @@ def main(video_path: str, output_dir: str) -> None:
     """Convert VIDEO_PATH into a SCORM package."""
 
     try:
-        process_video(video_path)
-
         out_dir = Path(output_dir)
         out_dir.mkdir(parents=True, exist_ok=True)
+
+        process_video(video_path, str(out_dir))
         output_zip = out_dir / "scorm_package.zip"
         create_scorm_package(str(out_dir), str(output_zip))
         click.echo(f"Created SCORM package at {output_zip}")

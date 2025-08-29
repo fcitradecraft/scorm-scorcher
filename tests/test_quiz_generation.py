@@ -47,3 +47,22 @@ def test_save_quiz_to_json(tmp_path):
 
     data = json.loads(out.read_text())
     assert data == [{"question": "Q?", "choices": ["A", "B"], "answer": "A"}]
+
+
+def test_generate_quiz_and_save(monkeypatch, tmp_path):
+    md = tmp_path / "transcript.md"
+    md.write_text("content")
+
+    data = [
+        {"question": "Q1?", "choices": ["A", "B"], "answer": "A"},
+        {"question": "Q2?", "choices": ["C", "D"], "answer": "D"},
+    ]
+
+    monkeypatch.setenv("OPENAI_API_KEY", "x")
+    monkeypatch.setitem(sys.modules, "openai", _fake_openai_module(data))
+
+    questions = generate_quiz_from_markdown(str(md), num_questions=2)
+    out = tmp_path / "quiz.json"
+    save_quiz_to_json(questions, str(out))
+
+    assert json.loads(out.read_text()) == data

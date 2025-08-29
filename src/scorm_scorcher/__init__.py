@@ -13,8 +13,16 @@ __all__ = ["process_video", "create_scorm_package", "__version__"]
 
 # Optional imports that require extra dependencies
 try:  # pragma: no cover - optional feature
-    from .quiz_generation import generate_quiz_from_markdown, save_quiz_to_json
+    from .quiz_generation import (
+        generate_quiz_from_markdown,
+        save_quiz_to_json,
+        save_quiz_to_xlsx,
+    )
 except Exception:  # ModuleNotFoundError if optional deps missing
     pass
 else:
-    __all__ += ["generate_quiz_from_markdown", "save_quiz_to_json"]
+    __all__ += [
+        "generate_quiz_from_markdown",
+        "save_quiz_to_json",
+        "save_quiz_to_xlsx",
+    ]

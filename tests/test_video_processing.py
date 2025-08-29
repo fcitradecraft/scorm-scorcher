@@ -24,6 +24,27 @@ def _fake_run_factory(tmp_path: Path):
     return _fake_run
 
 
+def _fake_run_no_subs(tmp_path: Path):
+    """A ``subprocess.run`` replacement that simulates missing subtitles."""
+
+    def _fake_run(cmd: List[str], capture_output: bool = True, text: bool = True):
+        output = Path(cmd[-1])
+        if "segment" in cmd:
+            (tmp_path / "segment_000.mp4").write_text("seg0")
+            return subprocess.CompletedProcess(args=cmd, returncode=0)
+        if output.name == "subtitles.vtt":
+            # Simulate ffmpeg failing because no subtitle streams exist
+            return subprocess.CompletedProcess(
+                args=cmd,
+                returncode=1,
+                stderr="Output file does not contain any stream",
+            )
+        output.write_text("data")
+        return subprocess.CompletedProcess(args=cmd, returncode=0)
+
+    return _fake_run
+
+
 def test_process_video_success(tmp_path):
     video_file = tmp_path / "video.mp4"
     video_file.write_text("data")
@@ -37,6 +58,20 @@ def test_process_video_success(tmp_path):
     assert Path(artefacts["subtitles"]).is_file()
     assert len(artefacts["segments"]) == 2
     assert mock_run.call_count == 3
+
+
+def test_process_video_without_subtitles(tmp_path):
+    video_file = tmp_path / "video.mp4"
+    video_file.write_text("data")
+
+    with patch("scorm_scorcher.video_processing.shutil.which", return_value="ffmpeg"), \
+        patch("scorm_scorcher.video_processing.subprocess.run") as mock_run:
+        mock_run.side_effect = _fake_run_no_subs(tmp_path)
+        artefacts = process_video(str(video_file), str(tmp_path))
+
+    assert artefacts["subtitles"] is None
+    assert Path(artefacts["audio"]).is_file()
+    assert len(artefacts["segments"]) == 1  # one segment was created
 
 
 def test_process_video_missing_file(tmp_path):

@@ -1,0 +1,25 @@
+[project]
+name = "scorm-scorcher"
+version = "0.1.0"
+description = "Convert Video to SCORM Packages"
+authors = [{name = "Your Name", email = "you@example.com"}]
+requires-python = ">=3.10"
+readme = "README.md"
+
+[project.scripts]
+scorm-scorcher = "scorm_scorcher.cli:main"
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project.optional-dependencies]
+full = [
+    "click",
+    "openai",
+    "pandas",
+    "moviepy",
+    "srt",
+    "python-docx",
+    "jinja2",
+]

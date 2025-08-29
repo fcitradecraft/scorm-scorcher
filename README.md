@@ -11,7 +11,9 @@ Convert video files into SCORM 1.2 compliant packages.
 
 ## Usage
 ```
-scorm-scorcher <video-file> <output-directory>
+scorm-scorcher <video-file> --output-dir <dir>
 ```
+
+The output directory is optional and defaults to `output/`.
 
 This project is in early development and many features are placeholders.

@@ -8,8 +8,7 @@ import subprocess
 def process_video(video_path: str) -> None:
     """Basic processing of a video file.
 
-    Validates the input file and ensures ``ffmpeg`` can read it. The command's
-    stderr is surfaced to aid in debugging failed runs.
+> main
 
     Args:
         video_path: Path to the input video file.
@@ -26,6 +25,7 @@ def process_video(video_path: str) -> None:
     if shutil.which("ffmpeg") is None:
         raise EnvironmentError("ffmpeg is required but was not found on the system PATH")
 
+> main
     cmd = [
         "ffmpeg",
         "-v",
@@ -40,5 +40,5 @@ def process_video(video_path: str) -> None:
     if result.returncode != 0:
         stderr = result.stderr.strip() or "Unknown ffmpeg error"
         raise RuntimeError(f"ffmpeg failed to process '{video_path}': {stderr}")
-
+> main
     print(f"Processing video: {video_path}")

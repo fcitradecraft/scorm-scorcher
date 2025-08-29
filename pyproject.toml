@@ -6,6 +6,10 @@ authors = [{name = "Your Name", email = "you@example.com"}]
 requires-python = ">=3.10"
 readme = "README.md"
 
+dependencies = [
+    "click",
+]
+
 [project.scripts]
 scorm-scorcher = "scorm_scorcher.cli:main"
 
@@ -15,7 +19,6 @@ build-backend = "setuptools.build_meta"
 
 [project.optional-dependencies]
 full = [
-    "click",
     "openai",
     "pandas",
     "moviepy",

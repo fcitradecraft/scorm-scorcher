@@ -1,0 +1,15 @@
+README.md
+pyproject.toml
+src/scorm_scorcher/__init__.py
+src/scorm_scorcher/cli.py
+src/scorm_scorcher/quiz_generation.py
+src/scorm_scorcher/scorm_packager.py
+src/scorm_scorcher/video_processing.py
+src/scorm_scorcher.egg-info/PKG-INFO
+src/scorm_scorcher.egg-info/SOURCES.txt
+src/scorm_scorcher.egg-info/dependency_links.txt
+src/scorm_scorcher.egg-info/entry_points.txt
+src/scorm_scorcher.egg-info/requires.txt
+src/scorm_scorcher.egg-info/top_level.txt
+tests/test_scorm_packager.py
+tests/test_video_processing.py

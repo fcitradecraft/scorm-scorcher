@@ -1,0 +1,33 @@
+[project]
+name = "scorm-scorcher"
+version = "0.1.0"
+description = "Convert video files into SCORM 1.2 packages"
+authors = [{name = "fcitradecraft", email = "rio@fcitradecraft.com"}]
+requires-python = ">=3.10"
+readme = "README.md"
+dependencies = [
+    "click>=8.0",
+]
+
+[project.scripts]
+scorm-scorcher = "scorm_scorcher.cli:main"
+
+[project.optional-dependencies]
+# Whisper for local audio transcription
+transcribe = ["openai-whisper"]
+# OpenAI API for AI-generated quiz questions
+quiz = ["openai>=1.0"]
+# XLSX quiz export
+xlsx = ["pandas", "openpyxl"]
+# Everything
+full = ["openai-whisper", "openai>=1.0", "pandas", "openpyxl"]
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+scorm_scorcher = ["templates/*"]
